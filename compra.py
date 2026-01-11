@@ -18,3 +18,14 @@ def cerrar_compra(compra):
     compra.estado = "cerrada"
     compra.fecha_cierre = datetime.now()
 
+
+
+
+def recalcular_total(compra, items):
+    compra.total = sum(
+        item.cantidad * item.precio_unitario
+        for item in items
+    )
+
+
+
