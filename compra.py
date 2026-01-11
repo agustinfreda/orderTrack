@@ -18,7 +18,14 @@ def cerrar_compra(compra):
     compra.estado = "cerrada"
     compra.fecha_cierre = datetime.now()
 
+def agregar_producto(compra, producto):
+    if compra.estado != "abierta":
+        raise Exception("La compra no está abierta.")
 
+    if producto.cantidad <= 0 or producto.precio_unitario <= 0:
+        raise Exception("Valor ingresado incorrecto.")
+
+    compra.total += producto.cantidad * producto.precio_unitario
 
 
 def recalcular_total(compra, items):
