@@ -9,6 +9,7 @@ class Compra:
         self.lugar = lugar
         self.estado = "abierta"
         self.total = 0
+        self.cantidad_productos = 0
 
 
 def cerrar_compra(compra):
@@ -18,6 +19,17 @@ def cerrar_compra(compra):
     compra.estado = "cerrada"
     compra.fecha_cierre = datetime.now()
 
+
+def cancelar_compra(compra):
+    if compra.cantidad_productos > 0:
+        raise Exception("La compra no debe tener productos para cancelarse.")
+    
+    if compra.estado != "abierta":
+        raise Exception("No se puede cancelar una compra cerrada o cancelada con anterioridad.")
+
+    compra.estado = "cancelada"
+
+
 def agregar_producto(compra, producto):
     if compra.estado != "abierta":
         raise Exception("La compra no está abierta.")
@@ -26,6 +38,7 @@ def agregar_producto(compra, producto):
         raise Exception("Valor ingresado incorrecto.")
 
     compra.total += producto.cantidad * producto.precio_unitario
+    compra.cantidad_productos += 1
 
 
 def recalcular_total(compra, items):
